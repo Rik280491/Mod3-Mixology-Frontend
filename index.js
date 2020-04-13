@@ -1,5 +1,7 @@
 cocktailsAPI = "http://localhost:3000/cocktails";
+
 const cardList = document.querySelector(".cards-list");
+const cocktailFilterNav = document.querySelector(".product-filter")
 
 const ini = () => {
 	fetch(cocktailsAPI)
@@ -29,8 +31,9 @@ const renderCocktail = (cocktail) => {
 	cardTitleDiv.append(cardTitle);
 
 	card.addEventListener("click", () => {
-		cardList.innerHTML = ""
-		renderShowPage(cocktail);
+        cardList.innerHTML = ""
+        renderShowPage(cocktail);
+        
 	});
 
 	card.append(cardImageDiv, cardTitleDiv);
@@ -47,7 +50,8 @@ const filterCocktails = () => {
 			const cocktailFilter = document.querySelector("#cocktail-filter");
 
             
-			cocktailFilter.options[cocktailFilter.options.length] = new Option("All");
+
+			cocktailFilter.options[cocktailFilter.options.length] = new Option("All Cocktails");
 			for (index in cocktailNameArray) {
 				cocktailFilter.options[cocktailFilter.options.length] = new Option(
 					cocktailNameArray[index]
@@ -58,7 +62,7 @@ const filterCocktails = () => {
                 cardList.innerHTML = ""
 				const filterValue = document.querySelector("#cocktail-filter").value;
                 
-				if (filterValue === "All") {
+				if (filterValue === "All Cocktails") {
 					cocktails.forEach((cocktail) => renderCocktail(cocktail));
 				} else {
 					const targetCocktail = cocktails.filter(

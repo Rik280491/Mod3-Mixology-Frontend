@@ -12,6 +12,7 @@ const cocktailShowPage = cocktail => {
     allCocktailsButton.innerText = "All Cocktails"
 
     allCocktailsButton.addEventListener("click", () => {
+        // showpages are stacking up when you nav back and forth 
         ini();
     })
     const cocktailName = document.createElement("h1")
