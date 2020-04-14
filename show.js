@@ -25,8 +25,25 @@ const cocktailShowPage = (cocktail) => {
 	const cocktailImg = document.createElement("img");
 	cocktailImg.src = cocktail.img_url;
 	cocktailImg.height = "500";
+    const ingMeasureUl = document.createElement("ul")
+    
+    
+    cocktail.ingredients.forEach(ingredient => {
+    
+    
+    const cocktailIngredients = document.createElement("li")
+    cocktailIngredients.innerText = ingredient.name
+     ingMeasureUl.append(cocktailIngredients)
+})
+    cocktail.measures.forEach(measure => {
+        const cocktailMeasure = document.createElement("li")
+        cocktailMeasure.innerText = measure.amount 
+    ingMeasureUl.append(cocktailMeasure)
+    })
 
-	const cocktailMethod = document.createElement("p");
+    
+    
+    const cocktailMethod = document.createElement("p");
 	cocktailMethod.innerText = cocktail.method;
 
 	const favButton = document.createElement("button");
@@ -45,7 +62,8 @@ const cocktailShowPage = (cocktail) => {
 	showPageContainer.append(
 		allCocktailsButton,
 		cocktailName,
-		cocktailImg,
+        cocktailImg,
+        ingMeasureUl,
 		cocktailMethod,
         favButton,
         favText
@@ -89,9 +107,9 @@ const favSubmit = (cocktail) => {
 
     fetch(postFavAPI, configObject)
         .then((resp) => resp.json())
-        // .then(user => {
-        //     cocktail.users.push(user)
-        // })
+        .catch()
+        
+       
 
 
 
