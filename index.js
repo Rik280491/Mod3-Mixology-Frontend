@@ -7,7 +7,8 @@ const cocktailFilterNav = document.querySelector(".product-filter");
 const ini = () => {
 	fetch(cocktailsAPI)
 		.then((resp) => resp.json())
-		.then((cocktails) => renderCocktails(cocktails));
+        .then((cocktails) => renderCocktails(cocktails));
+        
 };
 
 const renderCocktails = (cocktails) => {
@@ -32,7 +33,7 @@ const renderCocktail = (cocktail) => {
 	cardTitleDiv.append(cardTitle);
 
 	card.addEventListener("click", () => {
-		cardList.innerHTML = "";
+        cardList.innerHTML = "";
 		renderShowPage(cocktail);
 	});
 
@@ -63,16 +64,21 @@ const filterCocktails = () => {
 				const filterValue = cocktailFilter.value;
 
 				if (filterValue === "All Cocktails") {
-					cocktails.forEach((cocktail) => renderCocktail(cocktail));
+					renderCocktails(cocktails)
 				} else {
 					const targetCocktail = cocktails.filter(
 						(cocktail) => cocktail.name === filterValue
 					);
 					renderCocktail(targetCocktail[0]);
 				}
-			});
-			// FILTER BY MAIN INGREDIENT. SPLIT THIS INTO TWO FUNCTIONS
-            
+            });
+            filterCocktailsIng(cocktails);
+         })	
+        
+    };       
+   
+   
+    const filterCocktailsIng = (cocktails) => {
             fetch(combinationsAPI).then(resp => resp.json())
             .then(combinations => { 
               const ingredientsArray = combinations.map(combination => combination.ingredient.name).sort()
@@ -82,7 +88,11 @@ const filterCocktails = () => {
             
             const uniqIngredientsArray = [...new Set(ingredientsArray)];
 
-			const spiritFilter = document.querySelector("#spirit-filter");
+            const spiritFilter = document.querySelector("#spirit-filter");
+            
+            spiritFilter.options[spiritFilter.options.length] = new Option(
+				"Filter By Ingredient"
+			);
 
 			for (index in uniqIngredientsArray) {
 				spiritFilter.options[spiritFilter.options.length] = new Option(
@@ -94,8 +104,10 @@ const filterCocktails = () => {
 				cardList.innerText = "";
 				const spiritFilterValue = spiritFilter.value;
 
-				if (spiritFilterValue === "Filter By Spirit") {
-					cocktails.forEach((cocktail) => renderCocktail(cocktail));
+				if (spiritFilterValue === "Filter By Ingredient") {
+                    // return ini();
+                    renderCocktails(cocktails)
+                    
 				} else {
 					const targetSpirit = combinations.filter(
                         combination => combination.ingredient.name === spiritFilterValue
@@ -112,8 +124,9 @@ const filterCocktails = () => {
 				}
 			});
         })
-    });
-};
+    };
 
-ini();
+
+// ini();
 filterCocktails();
+
