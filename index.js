@@ -1,4 +1,5 @@
 cocktailsAPI = "http://localhost:3000/cocktails";
+combinationsAPI = "http://localhost:3000/combinations";
 
 const cardList = document.querySelector(".cards-list");
 const cocktailFilterNav = document.querySelector(".product-filter");
@@ -6,7 +7,8 @@ const cocktailFilterNav = document.querySelector(".product-filter");
 const ini = () => {
 	fetch(cocktailsAPI)
 		.then((resp) => resp.json())
-		.then((cocktails) => renderCocktails(cocktails));
+        .then((cocktails) => renderCocktails(cocktails));
+        
 };
 
 const renderCocktails = (cocktails) => {
@@ -31,7 +33,7 @@ const renderCocktail = (cocktail) => {
 	cardTitleDiv.append(cardTitle);
 
 	card.addEventListener("click", () => {
-		cardList.innerHTML = "";
+        cardList.innerHTML = "";
 		renderShowPage(cocktail);
 	});
 
@@ -62,19 +64,35 @@ const filterCocktails = () => {
 				const filterValue = cocktailFilter.value;
 
 				if (filterValue === "All Cocktails") {
-					cocktails.forEach((cocktail) => renderCocktail(cocktail));
+					renderCocktails(cocktails)
 				} else {
 					const targetCocktail = cocktails.filter(
 						(cocktail) => cocktail.name === filterValue
 					);
 					renderCocktail(targetCocktail[0]);
 				}
-			});
-			// FILTER BY MAIN INGREDIENT
-			const ingredientsArray = cocktails.map((cocktail) => cocktail.ingredients[0].name).sort();
-			const uniqIngredientsArray = [...new Set(ingredientsArray)];
+            });
+            filterCocktailsIng(cocktails);
+         })	
+        
+    };       
+   
+   
+    const filterCocktailsIng = (cocktails) => {
+            fetch(combinationsAPI).then(resp => resp.json())
+            .then(combinations => { 
+              const ingredientsArray = combinations.map(combination => combination.ingredient.name).sort()
+            
+            
+             
+            
+            const uniqIngredientsArray = [...new Set(ingredientsArray)];
 
-			const spiritFilter = document.querySelector("#spirit-filter");
+            const spiritFilter = document.querySelector("#spirit-filter");
+            
+            spiritFilter.options[spiritFilter.options.length] = new Option(
+				"Filter By Ingredient"
+			);
 
 			for (index in uniqIngredientsArray) {
 				spiritFilter.options[spiritFilter.options.length] = new Option(
@@ -86,13 +104,16 @@ const filterCocktails = () => {
 				cardList.innerText = "";
 				const spiritFilterValue = spiritFilter.value;
 
-				if (spiritFilterValue === "Filter By Spirit") {
-					cocktails.forEach((cocktail) => renderCocktail(cocktail));
+				if (spiritFilterValue === "Filter By Ingredient") {
+                    // return ini();
+                    renderCocktails(cocktails)
+                    
 				} else {
-					const targetSpiritCocktail = cocktails.filter(
-						(cocktail) => cocktail.ingredients[0].name === spiritFilterValue
-					);
-
+					const targetSpirit = combinations.filter(
+                        combination => combination.ingredient.name === spiritFilterValue
+                    );
+                    const targetSpiritCocktail = targetSpirit.map(combination => combination.cocktail) 
+                    
 					if (targetSpiritCocktail.length > 1) {
 						targetSpiritCocktail.forEach((cocktail) =>
 							renderCocktail(cocktail)
@@ -102,8 +123,10 @@ const filterCocktails = () => {
 					}
 				}
 			});
-		});
-};
+        })
+    };
 
-ini();
+
+// ini();
 filterCocktails();
+
