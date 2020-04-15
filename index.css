@@ -8,8 +8,8 @@
   
   .card {
     margin: 30px auto;
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     border-radius: 40px;
   box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
     cursor: pointer;
@@ -34,9 +34,10 @@
     border-radius: 0px 0px 40px 40px;
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 24px;
     margin-top: -80px;
     height: 40px;
+    color: cadetblue;
   }
   
   .card:hover {
@@ -81,9 +82,9 @@
   h1	{
     color: black;
     font-family: arial, sans-serif;
-    font-size: 32px;
+    font-size: 40px;
     font-weight: bold;
-    margin-top: 0px;
+    margin-top: 10px;
     margin-bottom: 1px;
     text-align: center;
     }
@@ -91,4 +92,16 @@
 
   #navBar {
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  body {
+    background-color: rgb(213, 227, 228);
+  }
+
+  .header-title {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: cadetblue;
   }
