@@ -26,7 +26,9 @@ const cocktailShowPage = (cocktail) => {
 	cocktailImg.height = "500";
 	const ingMeasureUl = document.createElement("ul");
     
-	cocktail.ingredients.forEach((ingredient) => {
+    // THIS IS ERRORING WHEN YOU TRY AND SHOW AFTER ING FILTER
+    
+    cocktail.ingredients.forEach((ingredient) => {
 		const cocktailIngredients = document.createElement("li");
 		cocktailIngredients.innerText = ingredient.name;
 		ingMeasureUl.append(cocktailIngredients);
@@ -91,7 +93,7 @@ const relatedNews = (cocktail) => {
 	showPageContainer.append(drinkAware);
 };
 
-console.log(currentUser)
+
 const favSubmit = (cocktail, showPageContainer) => {
     
 	const configObject = {
@@ -111,8 +113,10 @@ const favSubmit = (cocktail, showPageContainer) => {
         .then(userCocktail => {
             const newCocktail = userCocktail.cocktail
             const user = userCocktail.user 
-            showPageContainer.innerText = ""
-            userCocktails(user, newCocktail)
+             showPageContainer.innerText = ""
+           return userCocktails(user, newCocktail)
+            
+       
             
         })
         

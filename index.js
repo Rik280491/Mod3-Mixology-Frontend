@@ -7,8 +7,7 @@ const cocktailFilterNav = document.querySelector(".product-filter");
 const ini = () => {
 	fetch(cocktailsAPI)
 		.then((resp) => resp.json())
-        .then((cocktails) => renderCocktails(cocktails));
-        
+		.then((cocktails) => renderCocktails(cocktails));
 };
 
 const renderCocktails = (cocktails) => {
@@ -16,7 +15,6 @@ const renderCocktails = (cocktails) => {
 };
 
 const renderCocktail = (cocktail) => {
-	
 	const card = document.createElement("div");
 	card.className = "card";
 
@@ -33,7 +31,7 @@ const renderCocktail = (cocktail) => {
 	cardTitleDiv.append(cardTitle);
 
 	card.addEventListener("click", () => {
-        cardList.innerHTML = "";
+		cardList.innerHTML = "";
 		renderShowPage(cocktail);
 	});
 
@@ -64,69 +62,69 @@ const filterCocktails = () => {
 				const filterValue = cocktailFilter.value;
 
 				if (filterValue === "All Cocktails") {
-					renderCocktails(cocktails)
+					renderCocktails(cocktails);
 				} else {
 					const targetCocktail = cocktails.filter(
 						(cocktail) => cocktail.name === filterValue
 					);
 					renderCocktail(targetCocktail[0]);
 				}
-            });
-            filterCocktailsIng(cocktails);
-         })	
-        
-    };       
-   
-   
-    const filterCocktailsIng = (cocktails) => {
-            fetch(combinationsAPI).then(resp => resp.json())
-            .then(combinations => { 
-              const ingredientsArray = combinations.map(combination => combination.ingredient.name).sort()
-            
-            
-             
-            
-            const uniqIngredientsArray = [...new Set(ingredientsArray)];
+			});
+			filterCocktailsIng(cocktails);
+		});
+};
 
-            const spiritFilter = document.querySelector("#spirit-filter");
-            
-            spiritFilter.options[spiritFilter.options.length] = new Option(
+const filterCocktailsIng = (cocktails) => {
+	fetch(combinationsAPI)
+		.then((resp) => resp.json())
+		.then((combinations) => {
+			const ingredientsArray = combinations
+				.map((combination) => combination.ingredient.name)
+				.sort();
+
+			const uniqIngredientsArray = [...new Set(ingredientsArray)];
+
+			const ingredientFilter = document.querySelector("#ingredient-filter");
+
+			ingredientFilter.options[ingredientFilter.options.length] = new Option(
 				"Filter By Ingredient"
 			);
 
 			for (index in uniqIngredientsArray) {
-				spiritFilter.options[spiritFilter.options.length] = new Option(
+				ingredientFilter.options[ingredientFilter.options.length] = new Option(
 					uniqIngredientsArray[index]
 				);
 			}
+			filterEventHandler(combinations, ingredientFilter, cocktails);
+		});
+};
 
-			spiritFilter.addEventListener("change", () => {
-				cardList.innerText = "";
-				const spiritFilterValue = spiritFilter.value;
+const filterEventHandler = (combinations, ingredientFilter, cocktails) => {
+	ingredientFilter.addEventListener("change", () => {
+		cardList.innerText = "";
+		const ingredientFilterValue = ingredientFilter.value;
 
-				if (spiritFilterValue === "Filter By Ingredient") {
-                    // return ini();
-                    renderCocktails(cocktails)
-                    
-				} else {
-					const targetSpirit = combinations.filter(
-                        combination => combination.ingredient.name === spiritFilterValue
-                    );
-                    const targetSpiritCocktail = targetSpirit.map(combination => combination.cocktail) 
-                    
-					if (targetSpiritCocktail.length > 1) {
-						targetSpiritCocktail.forEach((cocktail) =>
-							renderCocktail(cocktail)
-						);
-					} else {
-						renderCocktail(targetSpiritCocktail[0]);
-					}
-				}
-			});
-        })
-    };
-
+		if (ingredientFilterValue === "Filter By Ingredient") {
+			renderCocktails(cocktails);
+		} else {
+			const targetIngredient = combinations.filter(
+				(combination) => combination.ingredient.name === ingredientFilterValue
+			);
+			const targetCocktail = targetIngredient.map(
+				(combination) => combination.cocktail.id)
+                
+            const formatTargetCocktail = cocktails.filter(cocktail => targetCocktail.includes(cocktail.id))
+                console.log(formatTargetCocktail)
+        
+			if (formatTargetCocktail.length > 1) {
+				formatTargetCocktail.forEach((cocktail) => renderCocktail(cocktail));
+			} else {
+                renderCocktail(formatTargetCocktail[0]);
+                
+			}
+		}
+	});
+};
 
 // ini();
 filterCocktails();
-
