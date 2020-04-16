@@ -53,6 +53,10 @@ const userFormSubmit = (userInput) => {
 };
 
 const userCocktails = (user, newCocktail) => {
+    const headerChecker = document.querySelector(".favs")
+    if (headerChecker.innerHTML !== "") {
+        headerChecker.innerHTML = ""
+    }
 	const userFavHeader = document.createElement("h1");
 
 	fetch(`${userAPI}/${user.id}`)
