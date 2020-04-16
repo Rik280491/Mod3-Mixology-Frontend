@@ -58,7 +58,13 @@ const userFormSubmit = (userInput) => {
 };
 
 const userCocktails = (user, newCocktail, userCocktail) => {
-    
+	const allCocktailButton = document.createElement("button")
+	allCocktailButton.innerText = "All Cocktails"
+
+	allCocktailButton.addEventListener("click", () => {
+		userFavContainer.innerText = "";
+		ini();
+	});
     const headerChecker = document.querySelector(".favs");
 	if (headerChecker.innerHTML !== "") {
 		headerChecker.innerHTML = "";
@@ -98,7 +104,7 @@ const userCocktails = (user, newCocktail, userCocktail) => {
 					}
 				});
 		});
-    userFavContainer.append(userFavHeader);
+    userFavContainer.append(userFavHeader, allCocktailButton);
 
     
 };
@@ -122,6 +128,15 @@ const handleNotePatch = (cocktailNote, userCocktail) => {
     .then(resp => resp.json())
     .then(userCocktail => console.log(userCocktail))
 }
+
+const handleDeleteFav = (noteDiv, cardList, userCocktail) => {
+	fetch(`${postFavAPI}/${userCocktail.id}`, {
+		method: "DELETE"
+	}).then(() => noteDiv.remove())
+	.then(() => cardList.removeChild(cardList.childNodes[0]))
+	
+}
+
 
 
 
