@@ -20,12 +20,13 @@ const cocktailShowPage = (cocktail) => {
 		userFavs.innerHTML = ""
 		ini();
 	});
-	const cocktailName = document.createElement("h1");
+	const cocktailName = document.createElement("h2");
 	cocktailName.innerText = cocktail.name;
 
 	const cocktailImg = document.createElement("img");
 	cocktailImg.src = cocktail.img_url;
-	cocktailImg.height = "500";
+	cocktailImg.height = "300";
+	cocktailImg.className = "image"
 	const ingMeasureUl = document.createElement("ul");
     
   
@@ -33,6 +34,9 @@ const cocktailShowPage = (cocktail) => {
 	for (let i = 0; i < cocktail.ingredients.length; i++) {
 		const cocktailIngredients = document.createElement("li");
 		cocktailIngredients.innerText = cocktail.ingredients[i].name + " - " + cocktail.measures[i].amount;
+		cocktailIngredients.style.alignItems = "center"
+		cocktailIngredients.style.justifyContent = "center"
+		cocktailIngredients.style.display = "flex"
 		ingMeasureUl.append(cocktailIngredients);
 	}
 
@@ -50,7 +54,26 @@ const cocktailShowPage = (cocktail) => {
         favSubmit(cocktail, showPageContainer);
         
     });
-    
+
+	cocktailName.style.alignItems = "center"
+	cocktailName.style.justifyContent = "center"
+	cocktailName.style.display = "flex"
+
+	cocktailImg.style.display = "block"
+	cocktailImg.style.marginLeft = "auto"
+	cocktailImg.style.marginRight = "auto"
+
+	cocktailMethod.style.alignItems = "center"
+	cocktailMethod.style.justifyContent = "center"
+	cocktailMethod.style.display = "flex"
+
+	favButton.style.display = "block"
+	favButton.style.marginLeft = "auto"
+	favButton.style.marginRight = "auto"
+
+	favText.style.alignItems = "center"
+	favText.style.justifyContent = "center"
+	favText.style.display = "flex"
 
 	showPageContainer.append(
 		allCocktailsButton,
@@ -61,7 +84,6 @@ const cocktailShowPage = (cocktail) => {
         favButton,
 		favText
 	);
-
 	
 	relatedNews(cocktail);
 };
@@ -73,8 +95,11 @@ const cocktailShowPage = (cocktail) => {
 const relatedNews = (cocktail) => {
 	const drinkAware = document.createElement("img");
 	drinkAware.src = "./images/Five signs self isolation.png";
-	drinkAware.height = "300";
-	drinkAware.width = "300";
+	drinkAware.height = "200";
+	drinkAware.width = "200";
+	drinkAware.style.display = "block"
+	drinkAware.style.marginLeft = "auto"
+	drinkAware.style.marginRight = "auto"
 	showPageContainer.append(drinkAware);
 };
 
