@@ -64,9 +64,15 @@ const userFormSubmit = userInput => {
 
 const userCocktails = (user, cocktail) => {
    console.log(user, cocktail)
+    const headerChecker = document.querySelector(".favs")
+    if (headerChecker.innerHTML !== "") {
+        headerChecker.innerHTML = ""
+    }
     const userFavHeader = document.createElement("h1")
     userFavHeader.innerText = `${user.username}'s Favourites!`
     renderCocktail(cocktail)
+
+    // We want to render cocktails that are in usercocktails with this user id
 
     // notes for each cocktail? usercocktail comments column
 

@@ -26,16 +26,22 @@ const cocktailShowPage = (cocktail) => {
 	cocktailImg.height = "500";
 	const ingMeasureUl = document.createElement("ul");
     
-	cocktail.ingredients.forEach((ingredient) => {
+	// cocktail.ingredients.forEach((ingredient) => {
+	// 	const cocktailIngredients = document.createElement("li");
+	// 	cocktailIngredients.innerText = ingredient.name;
+	// 	ingMeasureUl.append(cocktailIngredients);
+	// });
+	// cocktail.measures.forEach((measure) => {
+	// 	const cocktailMeasure = document.createElement("li");
+	// 	cocktailMeasure.innerText = measure.amount;
+	// 	ingMeasureUl.append(cocktailMeasure);
+	// });
+
+	for (let i = 0; i < cocktail.ingredients.length; i++) {
 		const cocktailIngredients = document.createElement("li");
-		cocktailIngredients.innerText = ingredient.name;
+		cocktailIngredients.innerText = cocktail.ingredients[i].name + " - " + cocktail.measures[i].amount;
 		ingMeasureUl.append(cocktailIngredients);
-	});
-	cocktail.measures.forEach((measure) => {
-		const cocktailMeasure = document.createElement("li");
-		cocktailMeasure.innerText = measure.amount;
-		ingMeasureUl.append(cocktailMeasure);
-	});
+	}
 
 	const cocktailMethod = document.createElement("p");
 	cocktailMethod.innerText = cocktail.method;
