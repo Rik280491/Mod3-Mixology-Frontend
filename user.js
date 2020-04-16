@@ -1,16 +1,18 @@
 const userAPI = "http://localhost:3000/users";
 const userContainer = document.querySelector("#user-container");
 const userFavContainer = document.querySelector("#user-favourites");
-
+const animatedCocktail = document.querySelector(".wrapper")
 let currentUser;
 
 const landingPage = () => {
 	const welcomeMessage = document.createElement("p");
-	welcomeMessage.innerText = "Mixology....";
+	welcomeMessage.innerText = "Welcome!"
 
 	userContainer.append(welcomeMessage);
 	createUser();
 	// logInUser();
+
+
 };
 
 const createUser = () => {
@@ -20,12 +22,13 @@ const createUser = () => {
 	const userForm = document.createElement("form");
 	const userInput = document.createElement("input");
 	userInput.name = "username";
-
+    const submitButton = document.createElement("button")
+    submitButton.innerText = "Enter"
 	userForm.addEventListener("submit", (event) => {
 		event.preventDefault();
 		userFormSubmit(userInput);
 	});
-	userForm.append(userInput);
+	userForm.append(userInput, submitButton);
 	userContainer.append(userMessage, userForm);
 };
 
@@ -49,12 +52,14 @@ const userFormSubmit = (userInput) => {
 			currentUser = user;
 			console.log(currentUser);
 		});
-	userContainer.innerText = "";
-	ini();
+	userContainer.remove()
+    animatedCocktail.remove()
+    ini();
 };
 
 const userCocktails = (user, newCocktail, userCocktail) => {
-	const headerChecker = document.querySelector(".favs");
+    
+    const headerChecker = document.querySelector(".favs");
 	if (headerChecker.innerHTML !== "") {
 		headerChecker.innerHTML = "";
 	}
@@ -69,27 +74,55 @@ const userCocktails = (user, newCocktail, userCocktail) => {
 				.then((resp) => resp.json())
 				.then((cocktails) => {
 					if (user.cocktails.length > 1) {
-                        const userCocktailIDs = user.cocktails.map(cocktail => cocktail.id)
-                        const formatCocktails = cocktails.filter(
-                            (cocktail) => userCocktailIDs.includes(cocktail.id))
-                            console.log(formatCocktails)
+						const userCocktailIDs = user.cocktails.map(
+							(cocktail) => cocktail.id
+						);
+						const formatCocktails = cocktails.filter((cocktail) =>
+							userCocktailIDs.includes(cocktail.id)
+						);
 						
-						formatCocktails.forEach((cocktail) => renderCocktail(cocktail));
+
+						formatCocktails.forEach((cocktail) => {
+							renderCocktail(cocktail);
+                            renderNote(cardList, userCocktail);
+                            console.log(userCocktail)
+						});
 					} else {
 						const formatCocktail = cocktails.filter(
-                            (cocktail) => cocktail.id === user.cocktails[0].id)
-                            console.log(formatCocktail)
-					
-                        renderCocktail(formatCocktail[0]);
-                        
+							(cocktail) => cocktail.id === user.cocktails[0].id
+						);
+						
+
+						renderCocktail(formatCocktail[0]);
+						renderNote(cardList, userCocktail);
 					}
 				});
 		});
+    userFavContainer.append(userFavHeader);
+
     
-        const cocktailNote = document.createElement("textarea")
-        cocktailNote.innerText = "Notes"
-    
-        userFavContainer.append(userFavHeader, cocktailNote);
 };
+
+const handleNotePatch = (cocktailNote, userCocktail) => {
+
+    
+    const configObject = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify({
+            notes: cocktailNote.value
+            
+        })
+    }
+    console.log(postFavAPI, userCocktail.id)
+    fetch(`${postFavAPI}/${userCocktail.id}`, configObject)
+    .then(resp => resp.json())
+    .then(userCocktail => console.log(userCocktail))
+}
+
+
 
 landingPage();

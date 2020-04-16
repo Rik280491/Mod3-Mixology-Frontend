@@ -39,8 +39,32 @@ const renderCocktail = (cocktail) => {
 	});
 
 	card.append(cardImageDiv, cardTitleDiv);
-	cardList.append(card);
+    cardList.append(card);
+    
+
 };
+
+
+const renderNote = (cardList, userCocktail) => {
+    console.log(userCocktail)
+    const cocktailNote = document.createElement("textarea")
+    cocktailNote.innerText = "Notes"
+    
+    const deleteButton = document.createElement("button")
+    deleteButton.innerText = "Remove from Favourites!"
+    
+    cardList.append(cocktailNote, deleteButton)
+
+    cocktailNote.addEventListener("click", () => {
+        handleNotePatch(cocktailNote, userCocktail)
+    })
+
+    // deleteButton.addEventListener("click", () => {
+    //     handleDeleteFav(cardList);
+    // })
+
+}
+
 
 const filterCocktails = () => {
 	fetch(cocktailsAPI)
