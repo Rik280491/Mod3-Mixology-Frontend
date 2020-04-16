@@ -33,12 +33,22 @@ const renderCocktail = (cocktail) => {
 	cardTitle.innerText = cocktail.name;
 	cardTitleDiv.append(cardTitle);
 
+	const cardDes = document.createElement("div")
+	cardDes.className = "des"
+	const desUL = document.createElement("ul")
+	cocktail.ingredients.forEach(ingredient => {
+		let ingredientItem = document.createElement("li")
+		ingredientItem.innerText = ingredient.name
+		desUL.append(ingredientItem)
+	});
+	cardDes.append(desUL)
+
 	card.addEventListener("click", () => {
 		cardList.innerHTML = "";
 		renderShowPage(cocktail);
 	});
 
-	card.append(cardImageDiv, cardTitleDiv);
+	card.append(cardImageDiv, cardTitleDiv, cardDes);
 	cardList.append(card);
 };
 
