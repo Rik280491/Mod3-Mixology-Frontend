@@ -1,5 +1,5 @@
-cocktailsAPI = "http://localhost:3000/cocktails";
-combinationsAPI = "http://localhost:3000/combinations";
+const cocktailsAPI = "http://localhost:3000/cocktails";
+const combinationsAPI = "http://localhost:3000/combinations";
 
 const cardList = document.querySelector(".cards-list");
 const cocktailFilterNav = document.querySelector(".product-filter");
@@ -7,11 +7,14 @@ const cocktailFilterNav = document.querySelector(".product-filter");
 const ini = () => {
 	fetch(cocktailsAPI)
 		.then((resp) => resp.json())
-		.then((cocktails) => renderCocktails(cocktails));
-};
+		.then((cocktails) => {
+            renderCocktails(cocktails);
+            
+})};
 
 const renderCocktails = (cocktails) => {
-	cocktails.forEach((cocktail) => renderCocktail(cocktail));
+    cocktails.forEach((cocktail) => 
+    renderCocktail(cocktail));
 };
 
 const renderCocktail = (cocktail) => {

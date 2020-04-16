@@ -1,6 +1,7 @@
 const userAPI = "http://localhost:3000/users";
 const userContainer = document.querySelector("#user-container");
 const userFavContainer = document.querySelector("#user-favourites");
+
 let currentUser;
 
 const landingPage = () => {
@@ -52,28 +53,43 @@ const userFormSubmit = (userInput) => {
 	ini();
 };
 
-const userCocktails = (user, newCocktail) => {
-    const headerChecker = document.querySelector(".favs")
-    if (headerChecker.innerHTML !== "") {
-        headerChecker.innerHTML = ""
-    }
+const userCocktails = (user, newCocktail, userCocktail) => {
+	const headerChecker = document.querySelector(".favs");
+	if (headerChecker.innerHTML !== "") {
+		headerChecker.innerHTML = "";
+	}
 	const userFavHeader = document.createElement("h1");
+	userFavHeader.innerText = `${user.username}'s Favourites!`;
 
+	// user.cocktails is in a different format to cocktailsAPI
 	fetch(`${userAPI}/${user.id}`)
 		.then((res) => res.json())
 		.then((user) => {
-			if (user.cocktails.length > 1) {
-				user.cocktails.forEach((cocktail) => renderCocktail(cocktail));
-			} else {
-				renderCocktail(newCocktail);
-			}
+			fetch(cocktailsAPI)
+				.then((resp) => resp.json())
+				.then((cocktails) => {
+					if (user.cocktails.length > 1) {
+                        const userCocktailIDs = user.cocktails.map(cocktail => cocktail.id)
+                        const formatCocktails = cocktails.filter(
+                            (cocktail) => userCocktailIDs.includes(cocktail.id))
+                            console.log(formatCocktails)
+						
+						formatCocktails.forEach((cocktail) => renderCocktail(cocktail));
+					} else {
+						const formatCocktail = cocktails.filter(
+                            (cocktail) => cocktail.id === user.cocktails[0].id)
+                            console.log(formatCocktail)
+					
+                        renderCocktail(formatCocktail[0]);
+                        
+					}
+				});
 		});
-
-	userFavHeader.innerText = `${user.username}'s Favourites!`;
-
-	// notes for each cocktail? usercocktail comments column
-
-	userFavContainer.append(userFavHeader);
+    
+        const cocktailNote = document.createElement("textarea")
+        cocktailNote.innerText = "Notes"
+    
+        userFavContainer.append(userFavHeader, cocktailNote);
 };
 
 landingPage();

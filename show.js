@@ -26,20 +26,8 @@ const cocktailShowPage = (cocktail) => {
 	cocktailImg.height = "500";
 	const ingMeasureUl = document.createElement("ul");
     
-    // // THIS IS ERRORING WHEN YOU TRY AND SHOW AFTER ING FILTER
-    
-    // cocktail.ingredients.forEach((ingredient) => {
-	// // cocktail.ingredients.forEach((ingredient) => {
-	// // 	const cocktailIngredients = document.createElement("li");
-	// // 	cocktailIngredients.innerText = ingredient.name;
-	// // 	ingMeasureUl.append(cocktailIngredients);
-	// // });
-	// // cocktail.measures.forEach((measure) => {
-	// // 	const cocktailMeasure = document.createElement("li");
-	// // 	cocktailMeasure.innerText = measure.amount;
-	// // 	ingMeasureUl.append(cocktailMeasure);
-	// // });
-
+  
+    console.log(cocktail)
 	for (let i = 0; i < cocktail.ingredients.length; i++) {
 		const cocktailIngredients = document.createElement("li");
 		cocktailIngredients.innerText = cocktail.ingredients[i].name + " - " + cocktail.measures[i].amount;
@@ -72,25 +60,13 @@ const cocktailShowPage = (cocktail) => {
 		favText
 	);
 
-	// similarCocktails(cocktail);
+	
 	relatedNews(cocktail);
 };
 
-// const similarCocktails = (cocktail) => {
-// 	const similarCocktailsTitle = document.createElement("h3");
-// 	// cocktail.ingredients
-//    const filterIng = cocktail.ingredients[0].name
-//     similarCocktailsTitle.innerText = `Try these if you're a fan of ${filterIng}!`;
-//     fetch(cocktailsAPI)
-// 		.then((resp) => resp.json())
-// 		.then((cocktails) => {
-//         cocktails.filter(cocktail => cocktail.ingredients[0].name === filterIng )
-//         renderCocktail(cocktail)
 
-//         })
-//     showPageContainer.append(similarCocktailsTitle);
 
-// };
+
 
 const relatedNews = (cocktail) => {
 	const drinkAware = document.createElement("img");
@@ -121,7 +97,7 @@ const favSubmit = (cocktail, showPageContainer) => {
             const newCocktail = userCocktail.cocktail
             const user = userCocktail.user 
              showPageContainer.innerText = ""
-           return userCocktails(user, newCocktail)
+           return userCocktails(user, newCocktail, userCocktail)
             
        
             
