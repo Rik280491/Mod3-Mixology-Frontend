@@ -16,6 +16,8 @@ const cocktailShowPage = (cocktail) => {
 
 	allCocktailsButton.addEventListener("click", () => {
 		showPageContainer.innerText = "";
+		const userFavs = document.querySelector(".favs")
+		userFavs.innerHTML = ""
 		ini();
 	});
 	const cocktailName = document.createElement("h1");
