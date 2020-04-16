@@ -53,7 +53,11 @@ const cocktailShowPage = (cocktail) => {
 		event.preventDefault();
         favSubmit(cocktail, showPageContainer);
         
-    });
+	});
+	
+	allCocktailsButton.style.display = "block"
+	allCocktailsButton.style.marginLeft = "auto"
+	allCocktailsButton.style.marginRight = "auto"
 
 	cocktailName.style.alignItems = "center"
 	cocktailName.style.justifyContent = "center"
