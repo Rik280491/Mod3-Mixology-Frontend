@@ -52,7 +52,7 @@ const userFormSubmit = (userInput) => {
 			currentUser = user;
 			console.log(currentUser);
 		});
-	userContainer.remove()
+	userContainer.innerText = ""
     animatedCocktail.remove()
     ini();
 };
