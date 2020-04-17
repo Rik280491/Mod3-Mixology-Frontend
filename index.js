@@ -30,6 +30,7 @@ const renderCocktail = (cocktail) => {
 	const cardTitleDiv = document.createElement("div");
 	cardTitleDiv.className = "card_title title-white";
 	const cardTitle = document.createElement("h5");
+
 	cardTitle.innerText = cocktail.name;
 	cardTitleDiv.append(cardTitle);
 
@@ -48,9 +49,44 @@ const renderCocktail = (cocktail) => {
 		renderShowPage(cocktail);
 	});
 
-	card.append(cardImageDiv, cardTitleDiv, cardDes);
-	cardList.append(card);
+	card.append(cardImageDiv, cardTitleDiv);
+    cardList.append(card);
+    
+
 };
+
+
+const renderNote = (cardList, user, userCocktail) => {
+    console.log(user)
+    const cocktailNote = document.createElement("textarea")
+	
+	
+	// for (let i = 0; i < user.user_cocktails.length; i++ ) {	
+	// cocktailNote.innerText = `${user.user_cocktails[i].notes}`
+	// }
+	// debugger
+
+    
+    const deleteButton = document.createElement("button")
+    deleteButton.innerText = "Remove from Favourites!"
+	const saveNoteButton = document.createElement("button")
+	saveNoteButton.innerText = "Save"
+	const noteDiv = document.createElement("div")
+	noteDiv.append(cocktailNote, deleteButton, saveNoteButton)
+    cardList.append(noteDiv)
+
+    saveNoteButton.addEventListener("click", () => {
+		console.log(cocktailNote)
+		
+        handleNotePatch(cocktailNote, user, userCocktail)
+    })
+
+    deleteButton.addEventListener("click", () => {
+        handleDeleteFav(noteDiv, cardList, userCocktail);
+    })
+
+}
+
 
 const filterCocktails = () => {
 	fetch(cocktailsAPI)
