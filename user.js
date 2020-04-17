@@ -90,7 +90,7 @@ const userCocktails = (user, newCocktail, userCocktail) => {
 
 						formatCocktails.forEach((cocktail) => {
 							renderCocktail(cocktail);
-                            renderNote(cardList, userCocktail);
+                            renderNote(cardList, user, userCocktail);
                             console.log(userCocktail)
 						});
 					} else {
@@ -100,7 +100,7 @@ const userCocktails = (user, newCocktail, userCocktail) => {
 						
 
 						renderCocktail(formatCocktail[0]);
-						renderNote(cardList, userCocktail);
+						renderNote(cardList, user, userCocktail);
 					}
 				});
 		});
@@ -109,7 +109,7 @@ const userCocktails = (user, newCocktail, userCocktail) => {
     
 };
 
-const handleNotePatch = (cocktailNote, userCocktail) => {
+const handleNotePatch = (cocktailNote, user, userCocktail) => {
 
     
     const configObject = {
@@ -126,7 +126,14 @@ const handleNotePatch = (cocktailNote, userCocktail) => {
     console.log(postFavAPI, userCocktail.id)
     fetch(`${postFavAPI}/${userCocktail.id}`, configObject)
     .then(resp => resp.json())
-    .then(userCocktail => console.log(userCocktail))
+    .then(user_cocktail => {
+		for (let i = 0; i < user.user_cocktails.length; i++ ) {	
+			cocktailNote.innerText = `${user.user_cocktails[i].notes}`
+		console.log(user)
+		}
+		
+		
+	})
 }
 
 const handleDeleteFav = (noteDiv, cardList, userCocktail) => {

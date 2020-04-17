@@ -46,20 +46,29 @@ const renderCocktail = (cocktail) => {
 };
 
 
-const renderNote = (cardList, userCocktail) => {
-    console.log(userCocktail)
+const renderNote = (cardList, user, userCocktail) => {
+    console.log(user)
     const cocktailNote = document.createElement("textarea")
-    cocktailNote.innerText = "Notes"
+	
+	
+	// for (let i = 0; i < user.user_cocktails.length; i++ ) {	
+	// cocktailNote.innerText = `${user.user_cocktails[i].notes}`
+	// }
+	// debugger
+
     
     const deleteButton = document.createElement("button")
     deleteButton.innerText = "Remove from Favourites!"
-	
+	const saveNoteButton = document.createElement("button")
+	saveNoteButton.innerText = "Save"
 	const noteDiv = document.createElement("div")
-	noteDiv.append(cocktailNote, deleteButton)
+	noteDiv.append(cocktailNote, deleteButton, saveNoteButton)
     cardList.append(noteDiv)
 
-    cocktailNote.addEventListener("click", () => {
-        handleNotePatch(cocktailNote, userCocktail)
+    saveNoteButton.addEventListener("click", () => {
+		console.log(cocktailNote)
+		
+        handleNotePatch(cocktailNote, user, userCocktail)
     })
 
     deleteButton.addEventListener("click", () => {
