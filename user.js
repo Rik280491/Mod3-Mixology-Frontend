@@ -62,7 +62,9 @@ const userCocktails = (user, newCocktail, userCocktail) => {
 	allCocktailButton.innerText = "All Cocktails"
 
 	allCocktailButton.addEventListener("click", () => {
-		userFavContainer.innerText = "";
+        userFavContainer.innerText = "";
+        const notesDiv = document.querySelector(".notes")
+        notesDiv.remove();
 		ini();
 	});
     const headerChecker = document.querySelector(".favs");

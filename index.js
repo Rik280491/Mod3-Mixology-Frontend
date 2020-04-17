@@ -49,7 +49,7 @@ const renderCocktail = (cocktail) => {
 		renderShowPage(cocktail);
 	});
 
-	card.append(cardImageDiv, cardTitleDiv);
+	card.append(cardImageDiv, cardTitleDiv, cardDes);
     cardList.append(card);
     
 
@@ -72,6 +72,7 @@ const renderNote = (cardList, user, userCocktail) => {
 	const saveNoteButton = document.createElement("button")
 	saveNoteButton.innerText = "Save"
 	const noteDiv = document.createElement("div")
+	noteDiv.className = "notes"
 	noteDiv.append(cocktailNote, deleteButton, saveNoteButton)
     cardList.append(noteDiv)
 
